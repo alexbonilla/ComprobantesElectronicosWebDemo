@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="Mosaddek">
+        <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+        <link rel="shortcut icon" href="img/favicon.png">
+
+        <title>Demo Facturación</title>
+
+        <!-- Bootstrap core CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/bootstrap-reset.css" rel="stylesheet">
+        <!--external css-->
+        <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+
+        <link rel="stylesheet" type="text/css" href="assets/bootstrap-datepicker/css/datepicker.css" />
+        <link rel="stylesheet" type="text/css" href="assets/bootstrap-colorpicker/css/colorpicker.css" />
+        <link rel="stylesheet" type="text/css" href="assets/bootstrap-daterangepicker/daterangepicker.css" />
+
+        <!-- Custom styles for this template -->
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/style-responsive.css" rel="stylesheet" />
+
+
+
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
+        <!--[if lt IE 9]>
+          <script src="js/html5shiv.js"></script>
+          <script src="js/respond.min.js"></script>
+        <![endif]-->
+
+
+    </head>
+
+    <body>
+
+        <section id="container" class="">
+            <!--header start-->
+            <header class="header white-bg">
+                <div class="sidebar-toggle-box">
+                    <div data-original-title="Toggle Navigation" data-placement="right" class="fa fa-bars tooltips"></div>
+                </div>
+                <!--logo start-->
+                <a href="old_operations.html" class="logo" >Facturacion<span>Demo</span></a>
+                <!--logo end-->
+                <div class="top-nav ">
+                    <ul class="nav pull-right top-menu">
+                        <li>
+                            <input type="text" class="form-control search" placeholder="Search">
+                        </li>
+                        <!-- user login dropdown start-->
+                        <li class="dropdown">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                <img alt="" src="img/alex_bonilla_avatar_small.jpg">
+                                <span class="username">Alex Bonilla</span>
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu extended logout">
+                                <div class="log-arrow-up"></div>
+                                <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
+                                <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
+                                <li><a href="#"><i class="fa fa-bell-o"></i> Notification</a></li>
+                                <li><a href="login.html"><i class="fa fa-key"></i> Log Out</a></li>
+                            </ul>
+                        </li>
+                        <!-- user login dropdown end -->
+                    </ul>
+                </div>
+            </header>
+            <!--header end-->
+            <!--sidebar start-->
+            <aside>
+                <div id="sidebar"  class="nav-collapse ">
+                    <!-- sidebar menu start-->
+
+                    <!-- sidebar menu end-->
+                </div>
+            </aside>
+            <!--sidebar end-->
+            <!--main content start-->
+            <section id="main-content">
+                <section class="wrapper">
+                    <!-- page start-->
+                    <div class="row">
+                        <div class="col-lg-6" id="contenedor">
+                            <section class="panel">
+                                <header class="panel-heading">
+                                    Formulario demo de Facturación
+                                </header>
+                                <div class="panel-body">
+                                    <form role="form">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label col-lg-3" for="numerocomprobante">Factura no.</label>
+                                            <div class="col-lg-9">
+                                                <input class="form-control" id="numerocomprobante" type="text" placeholder="Obteniendo no. de factura..." disabled="">
+                                                <br>
+                                            </div>
+                                        </div>                                        
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label col-lg-3" for="codestab">Establecimiento</label>
+                                            <div class="col-lg-9">
+                                                <select class="form-control m-bot15" id="codestab">
+                                                    <option>001</option>
+                                                    <option>002</option>
+                                                </select>
+                                            </div>
+                                        </div>                                          
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label col-lg-3" for="ptoemi">Caja</label>
+                                            <div class="col-lg-9">
+                                                <select class="form-control m-bot15" id="ptoemi">
+                                                    <option>1</option>
+                                                    <option>2</option>
+                                                    <option>3</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label col-lg-3" for="operador">Cajero</label>
+                                            <div class="col-lg-9">
+                                                <select class="form-control m-bot15" id="operador">
+                                                    <option>Juan</option>
+                                                    <option>Ana</option>
+                                                    <option>Victor</option>
+                                                </select>
+                                            </div>
+                                        </div>                                          
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label col-lg-3" for="tipoidcomprador">Tipo Id</label>
+                                            <div class="col-lg-9">
+                                                <select class="form-control m-bot15" id="tipoidcomprador">
+                                                    <option value="04">RUC</option>
+                                                    <option value="05">Cédula</option>
+                                                    <option value="06">Pasaporte</option>
+                                                    <option value="07">Consumidor Final</option>
+                                                </select>
+                                            </div>
+                                        </div>  
+                                        <div class="form-group">
+                                            <label for="idcomprador" class="col-lg-3">Id</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" class="form-control" id="idcomprador" placeholder="Ingrese id (RUC, cédula, etc.)" required>
+                                            </div>
+                                        </div>                                        
+                                        <div class="form-group">
+                                            <label for="razonsocial" class="col-lg-3">Razon Social</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" class="form-control" id="razonsocial" placeholder="Ingrese nombre completo o razon social" required>
+                                            </div>
+                                        </div>                                        
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label col-lg-3" for="codproducto">Producto</label>
+                                            <div class="col-lg-9">
+                                                <select class="form-control m-bot15" id="codproducto">
+                                                    <option>PRO-PRU-01</option>
+                                                    <option>PRO-PRU-02</option>
+                                                    <option>PRO-PRU-03</option>
+                                                    <option>PRO-PRU-04</option>
+                                                    <option>PRO-PRU-05</option>
+                                                </select>
+                                            </div>
+                                        </div>                                        
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label col-lg-3">V/unidad</label>
+                                            <div class="col-lg-9">                                               
+                                                <input type="number" class="form-control" id="precio"
+                                                       pattern="[0-9]+([\.|,][0-9]+)?" step="0.01" min="0"
+                                                       title="Debe ser un valor de hasta dos digitos decimales" required>                                              
+                                                <br>
+                                            </div>
+                                        </div>                                  
+                                        <div class="form-group">
+                                            <label for="email" class="col-lg-3">Correo-e</label>
+                                            <div class="col-lg-9">
+                                                <input type="email" class="form-control" id="email" placeholder="Ingrese correo para recibir XML" required>
+                                            </div>
+                                        </div>
+                                        <div class="btn btn-info" onclick="procesarFactura();">Enviar</div>
+
+                                    </form>
+
+                                </div>
+                            </section>
+                        </div>
+<!--                        <div class="col-lg-6" id="contenedorBatch">
+                            <section class="panel">
+                                <header class="panel-heading">
+                                    Demo de Facturación en Batch
+                                </header>
+                                <div class="panel-body">
+                                    <form role="form">                                                                             
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label col-lg-3">Registro inicial</label>
+                                            <div class="col-lg-9">                                               
+                                                <input type="number" class="form-control" id="registro_resultado_inicial"
+                                                       pattern="[0-9]+([\.|,][0-9]+)?" step="1" min="1"
+                                                       title="Registro inicial para proceso" required>                                              
+                                                <br>
+                                            </div>
+                                        </div>                                  
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label col-lg-3">Por procesar</label>
+                                            <div class="col-lg-9">                                               
+                                                <input type="number" class="form-control" id="numero_registros_procesar"
+                                                       pattern="[0-9]+([\.|,][0-9]+)?" step="1" min="1"
+                                                       title="Número de registros a procesar" required>                                              
+                                                <br>
+                                            </div>
+                                        </div>                                         
+                                        <div class="btn btn-info" onclick="procesarFacturasTrcRUC();">Enviar</div>
+
+                                    </form>
+
+                                </div>
+                            </section>
+                        </div>-->
+                    </div>
+                    <!-- page end-->
+                </section>
+            </section>
+            <!--main content end-->
+            <!--footer start-->
+            <footer class="site-footer">
+                <div class="text-center">
+                    2014 &copy; DemoFacturacionElectronica.
+                    <a href="#" class="go-top">
+                        <i class="fa fa-angle-up"></i>
+                    </a>
+                </div>
+            </footer>
+            <!--footer end-->
+        </section>
+
+        <!-- js placed at the end of the document so the pages load faster -->
+        <script src="js/jquery.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery.scrollTo.min.js"></script>
+        <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
+
+        <script src="js/jquery-ui-1.9.2.custom.min.js"></script>
+        <script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
+
+        <!--custom switch-->
+        <script src="js/bootstrap-switch.js"></script>
+        <!--custom tagsinput-->
+        <script src="js/jquery.tagsinput.js"></script>
+        <!--custom checkbox & radio-->
+        <script type="text/javascript" src="js/ga.js"></script>
+
+        <script type="text/javascript" src="assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+        <script type="text/javascript" src="assets/bootstrap-daterangepicker/date.js"></script>
+        <script type="text/javascript" src="assets/bootstrap-daterangepicker/daterangepicker.js"></script>
+        <script type="text/javascript" src="assets/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+        <script type="text/javascript" src="assets/ckeditor/ckeditor.js"></script>
+
+        <script type="text/javascript" src="assets/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
+        <script src="js/respond.min.js" ></script>
+
+
+        <!--common script for all pages-->
+        <script src="js/common-scripts.js"></script>
+
+        <!--script for this page-->
+        <script src="js/form-component.js"></script>
+        <script src="js/ajax.js"></script>
+        <script src="js/demo-facturacion.js"></script>
+
+    </body>
+</html>
