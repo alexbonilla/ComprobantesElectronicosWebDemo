@@ -1,0 +1,315 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="Operations" targetNamespace="http://ws.ihsuite.iveloper.com/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ws.ihsuite.iveloper.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<xs:schema elementFormDefault="unqualified" targetNamespace="http://ws.ihsuite.iveloper.com/" version="1.0" xmlns:tns="http://ws.ihsuite.iveloper.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="AddFilesWithApp" type="tns:AddFilesWithApp"/>
+<xs:element name="AddFilesWithAppResponse" type="tns:AddFilesWithAppResponse"/>
+<xs:element name="CloseLot" type="tns:CloseLot"/>
+<xs:element name="CloseLotResponse" type="tns:CloseLotResponse"/>
+<xs:element name="CreateLot" type="tns:CreateLot"/>
+<xs:element name="CreateLotResponse" type="tns:CreateLotResponse"/>
+<xs:element name="DocumentExist" type="tns:DocumentExist"/>
+<xs:element name="DocumentExistResponse" type="tns:DocumentExistResponse"/>
+<xs:element name="GetData" type="tns:GetData"/>
+<xs:element name="GetDataResponse" type="tns:GetDataResponse"/>
+<xs:complexType name="AddFilesWithApp">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="lotId" type="xs:string"/>
+      <xs:element minOccurs="0" name="docAppRefCode" type="xs:string"/>
+      <xs:element minOccurs="0" name="xmlString" type="xs:string"/>
+      <xs:element minOccurs="0" name="docTypeCode" type="xs:string"/>
+      <xs:element minOccurs="0" name="docNum" type="xs:string"/>
+      <xs:element minOccurs="0" name="referencia" type="xs:string"/>
+      <xs:element minOccurs="0" name="docRef" type="xs:base64Binary"/>
+      <xs:element name="sendNotification" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="clientContact" type="tns:clientContactObject"/>
+      <xs:element minOccurs="0" name="user" type="xs:string"/>
+      <xs:element minOccurs="0" name="pass" type="xs:string"/>
+      <xs:element minOccurs="0" name="userEntityId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="clientContactObject">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="cellphone1" type="xs:string"/>
+      <xs:element minOccurs="0" name="email1" type="xs:string"/>
+      <xs:element minOccurs="0" name="emailCC1" type="xs:string"/>
+      <xs:element minOccurs="0" name="name" type="xs:string"/>
+      <xs:element minOccurs="0" name="urlPost" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="AddFilesWithAppResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:wsResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="wsResponse">
+    <xs:complexContent>
+      <xs:extension base="tns:wsResponseBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="documentId" type="xs:string"/>
+          <xs:element minOccurs="0" name="lotId" type="xs:string"/>
+          <xs:element minOccurs="0" name="lotNumber" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="wsResponseBase">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="messageException" nillable="true" type="xs:string"/>
+      <xs:element name="processed" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="CloseLot">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="lotId" type="xs:string"/>
+      <xs:element minOccurs="0" name="user" type="xs:string"/>
+      <xs:element minOccurs="0" name="pass" type="xs:string"/>
+      <xs:element minOccurs="0" name="userEntityId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="CloseLotResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:wsResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="DocumentExist">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="docTypeCode" type="xs:string"/>
+      <xs:element minOccurs="0" name="docNum" type="xs:string"/>
+      <xs:element minOccurs="0" name="user" type="xs:string"/>
+      <xs:element minOccurs="0" name="pass" type="xs:string"/>
+      <xs:element minOccurs="0" name="userEntityId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="DocumentExistResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:wsResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="GetData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="documentId" type="xs:string"/>
+      <xs:element minOccurs="0" name="user" type="xs:string"/>
+      <xs:element minOccurs="0" name="pass" type="xs:string"/>
+      <xs:element minOccurs="0" name="userEntityId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="GetDataResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:wsResponseData"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="wsResponseData">
+    <xs:complexContent>
+      <xs:extension base="tns:wsResponseBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="documentAutorizacion" type="xs:string"/>
+          <xs:element minOccurs="0" name="documentAutorizacionDate" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="documentClave" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="documentEvents" nillable="true" type="tns:wsResponseDocumentEvent"/>
+          <xs:element minOccurs="0" name="documentId" type="xs:string"/>
+          <xs:element minOccurs="0" name="documentInstance" type="tns:docFacInstance"/>
+          <xs:element name="documentNotified" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="documentReference" type="xs:string"/>
+          <xs:element minOccurs="0" name="documentStatus" type="tns:sriStatus"/>
+          <xs:element minOccurs="0" name="documentType" type="tns:sriTipoComprobante"/>
+          <xs:element minOccurs="0" name="documentTypeEmision" type="tns:sriTypeEmission"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="wsResponseDocumentEvent">
+    <xs:sequence/>
+  </xs:complexType>
+<xs:complexType name="docFacInstance">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="datecreated" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="docapprefcode" type="xs:string"/>
+      <xs:element minOccurs="0" name="docautorizacion" type="xs:string"/>
+      <xs:element minOccurs="0" name="docautorizaciondate" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="docnum" type="xs:string"/>
+      <xs:element minOccurs="0" name="docref" type="xs:base64Binary"/>
+      <xs:element minOccurs="0" name="docstatus" type="tns:sriStatus"/>
+      <xs:element minOccurs="0" name="doctypecode" type="xs:string"/>
+      <xs:element minOccurs="0" name="document" type="xs:base64Binary"/>
+      <xs:element minOccurs="0" name="documentid" type="xs:string"/>
+      <xs:element minOccurs="0" name="lotid" type="xs:string"/>
+      <xs:element minOccurs="0" name="notifyemail" type="xs:string"/>
+      <xs:element minOccurs="0" name="notifyname" type="xs:string"/>
+      <xs:element minOccurs="0" name="reference" type="xs:string"/>
+      <xs:element minOccurs="0" name="statuschanged" type="xs:dateTime"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="CreateLot">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="description" type="xs:string"/>
+      <xs:element minOccurs="0" name="typeLot" type="tns:lotType"/>
+      <xs:element minOccurs="0" name="user" type="xs:string"/>
+      <xs:element minOccurs="0" name="pass" type="xs:string"/>
+      <xs:element minOccurs="0" name="userEntityId" type="xs:string"/>
+      <xs:element minOccurs="0" name="notiEmailInternal" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="CreateLotResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:wsResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:simpleType name="sriStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Autorizada"/>
+      <xs:enumeration value="Cancelada"/>
+      <xs:enumeration value="Devuelta"/>
+      <xs:enumeration value="NoAutorizada"/>
+      <xs:enumeration value="NoProcesada"/>
+      <xs:enumeration value="Recibida"/>
+    </xs:restriction>
+  </xs:simpleType>
+<xs:simpleType name="sriTipoComprobante">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Factura"/>
+      <xs:enumeration value="NotaCredito"/>
+      <xs:enumeration value="NotaDebito"/>
+      <xs:enumeration value="GuiaRemision"/>
+      <xs:enumeration value="ComprobanteRetencion"/>
+    </xs:restriction>
+  </xs:simpleType>
+<xs:simpleType name="sriTypeEmission">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="normal"/>
+      <xs:enumeration value="contingencia"/>
+    </xs:restriction>
+  </xs:simpleType>
+<xs:simpleType name="lotType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Unitario"/>
+      <xs:enumeration value="Multiple"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="DocumentExistResponse">
+    <wsdl:part element="tns:DocumentExistResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetData">
+    <wsdl:part element="tns:GetData" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CloseLot">
+    <wsdl:part element="tns:CloseLot" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="AddFilesWithAppResponse">
+    <wsdl:part element="tns:AddFilesWithAppResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CloseLotResponse">
+    <wsdl:part element="tns:CloseLotResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CreateLot">
+    <wsdl:part element="tns:CreateLot" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CreateLotResponse">
+    <wsdl:part element="tns:CreateLotResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetDataResponse">
+    <wsdl:part element="tns:GetDataResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="DocumentExist">
+    <wsdl:part element="tns:DocumentExist" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="AddFilesWithApp">
+    <wsdl:part element="tns:AddFilesWithApp" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="Operations">
+    <wsdl:operation name="AddFilesWithApp">
+      <wsdl:input message="tns:AddFilesWithApp" name="AddFilesWithApp">
+    </wsdl:input>
+      <wsdl:output message="tns:AddFilesWithAppResponse" name="AddFilesWithAppResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CloseLot">
+      <wsdl:input message="tns:CloseLot" name="CloseLot">
+    </wsdl:input>
+      <wsdl:output message="tns:CloseLotResponse" name="CloseLotResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DocumentExist">
+      <wsdl:input message="tns:DocumentExist" name="DocumentExist">
+    </wsdl:input>
+      <wsdl:output message="tns:DocumentExistResponse" name="DocumentExistResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetData">
+      <wsdl:input message="tns:GetData" name="GetData">
+    </wsdl:input>
+      <wsdl:output message="tns:GetDataResponse" name="GetDataResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateLot">
+      <wsdl:input message="tns:CreateLot" name="CreateLot">
+    </wsdl:input>
+      <wsdl:output message="tns:CreateLotResponse" name="CreateLotResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="OperationsSoapBinding" type="tns:Operations">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="AddFilesWithApp">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="AddFilesWithApp">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="AddFilesWithAppResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CloseLot">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="CloseLot">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="CloseLotResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DocumentExist">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="DocumentExist">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="DocumentExistResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetData">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="GetData">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="GetDataResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateLot">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="CreateLot">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="CreateLotResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Operations">
+    <wsdl:port binding="tns:OperationsSoapBinding" name="OperationsPort">
+      <soap:address location="http://172.16.15.13:8080/ihsuite/Operations"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

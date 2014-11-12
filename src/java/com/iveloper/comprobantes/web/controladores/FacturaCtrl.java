@@ -20,14 +20,24 @@ import com.iveloper.comprobantes.utils.ArchivoUtils;
 import com.iveloper.comprobantes.utils.ClaveAcceso;
 import com.iveloper.db.Conexion;
 import com.iveloper.entidades.TrcRUC;
+import com.iveloper.ihsuite.ws.ClientContactObject;
+import com.iveloper.ihsuite.ws.LotType;
+import com.iveloper.ihsuite.ws.Operations;
+import com.iveloper.ihsuite.ws.Operations_Service;
+import com.iveloper.ihsuite.ws.SriStatus;
+import com.iveloper.ihsuite.ws.WsResponse;
+import com.iveloper.ihsuite.ws.WsResponseData;
 import ec.gob.sri.comprobantes.ws.aut.Autorizacion;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -113,7 +123,11 @@ public class FacturaCtrl extends HttpServlet {
         if (op.equalsIgnoreCase("numFactura")) {
             out.print(obtenerSigNumFactura());
         } else if (op.equalsIgnoreCase("procesoCompleto")) {
-            out.print(procesoCompletoFactura(request, response));
+            try {
+                out.print(procesoCompletoFacturaWS(request, response));
+            } catch (MalformedURLException | InterruptedException ex) {
+                Logger.getLogger(FacturaCtrl.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else if (op.equalsIgnoreCase("procesoBatch")) {
             out.print(construirFacturaElectronicaTrcRUCBatch(request, response));
         } else if (op.equalsIgnoreCase("pruebaSQLSERVER")) {
@@ -151,7 +165,8 @@ public class FacturaCtrl extends HttpServlet {
         Conexion c = new Conexion();
         try {
             c.conectar();
-            signumfactura = c.obtenerSigNumFactura();
+//            signumfactura = c.obtenerSigNumFactura();
+            signumfactura = 1980;
         } catch (Exception ex) {
             Logger.getLogger(ConexionTest.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -164,6 +179,53 @@ public class FacturaCtrl extends HttpServlet {
             }
         }
         return signumfactura;
+    }
+
+    private String procesoCompletoFacturaWS(HttpServletRequest request, HttpServletResponse response) throws MalformedURLException, InterruptedException {
+        String respuesta = null;
+        String tipoid_comprador = request.getParameter("tipoidcomprador");
+        String id_comprador = request.getParameter("idcomprador");
+        String razonsocial_comprador = request.getParameter("razonsocial");
+        String operador = request.getParameter("operador");
+        String email = request.getParameter("email");
+        String codproducto = request.getParameter("codproducto");
+        String precio = request.getParameter("precio");
+        String codestab = request.getParameter("codestab");
+        String ptoemi = request.getParameter("ptoemi");
+        String numerocomprobante = request.getParameter("numerocomprobante");
+        String path = getServletContext().getRealPath("/WEB-INF/configuration.properties");
+        String path_ihportal = getServletContext().getRealPath("/WEB-INF/configuration_portal.properties");
+        Conexion c;
+        c = new Conexion(path);
+
+        String factura = construirFacturaAsString(tipoid_comprador, id_comprador, razonsocial_comprador, operador, email, codproducto, precio, codestab, ptoemi, numerocomprobante);
+        String url_wsdl = "http://172.16.15.13:8080/ihsuite/Operations?WSDL";
+        String user="root";
+        String pass="1v3l0p3r$$_.";
+        String entityId="8fedf2aea0694f43acc887ff6b2b9a60";
+        Operations_Service operations_service = new Operations_Service(new URL(url_wsdl));
+        Operations operation = operations_service.getOperationsPort();
+        WsResponse lotRes = operation.createLot("Test lot", LotType.UNITARIO, user, pass, entityId, "alexfbonilla@hotmail.com");
+        if(lotRes.isProcessed()){
+            String lotId = lotRes.getLotId();
+            ClientContactObject cc = new ClientContactObject();
+            cc.setName(razonsocial_comprador);
+            cc.setEmail1(email);
+            WsResponse docRes = operation.addFilesWithApp(lotId, "PB", factura, "01", codestab+ptoemi+numerocomprobante, "Doc de prueba", new byte[0], true, cc, user, pass, entityId);
+            if(docRes.isProcessed()){
+                String docId = docRes.getDocumentId();
+                WsResponseData dataRes = operation.getData(docId, user, pass, entityId);
+                if(dataRes.getDocumentStatus().equals(SriStatus.NO_PROCESADA) || dataRes.getDocumentStatus().equals(SriStatus.RECIBIDA)){
+                    //Esperar
+                    Thread.sleep(TIEMPO_ESPERA_SOLICITAR_AUTORIZACION);
+                    dataRes = operation.getData(docId, user, pass, entityId);
+                    if(dataRes.isProcessed()){
+                        return dataRes.getDocumentStatus().value();
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     private String procesoCompletoFactura(HttpServletRequest request, HttpServletResponse response) {
@@ -260,6 +322,128 @@ public class FacturaCtrl extends HttpServlet {
             respuesta = "No se pudo enviar documento, revise su conectividad a internet y/o SRI.";
         }
         return respuesta;
+    }
+
+    private String construirFacturaAsString(String tipoid_comprador, String id_comprador, String razonsocial_comprador, String operador, String email, String codproducto, String precio, String codEstab, String ptoEmi, String numeroComprobante) {
+        String tipoEmision = "1"; //1 normal, 2 contingencia
+        String serie = String.format("%03d", Integer.parseInt(codEstab)) + String.format("%03d", Integer.parseInt(ptoEmi)); //serie arbitraria
+        Date fecha = new Date();
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        String fechaDocumento = df.format(fecha);
+
+        BigDecimal baseImponible = new BigDecimal(precio);
+        baseImponible = baseImponible.setScale(2, RoundingMode.HALF_UP);
+        BigDecimal totSinImp = baseImponible;
+        BigDecimal valorIva = baseImponible.multiply(new BigDecimal("0.12"));
+        valorIva = valorIva.setScale(2, RoundingMode.HALF_UP);
+        BigDecimal valorTotal = baseImponible.add(valorIva);
+        valorTotal = valorTotal.setScale(2, RoundingMode.HALF_UP);
+
+        System.out.println(baseImponible + " " + valorIva + " " + valorTotal);
+        numeroComprobante = String.format("%09d", Integer.parseInt(numeroComprobante));
+
+        System.out.println((new Date()) + " EVENTO: Se inicia la construcción de la factura no. " + serie + numeroComprobante + " ordenada por el operador " + operador);
+
+        Factura f = new Factura();
+        f.setVersion("1.1.0");
+        f.setId("comprobante");
+
+        InfoTributaria infoTributaria = new InfoTributaria();
+        infoTributaria.setAmbiente(AMBIENTE);
+        infoTributaria.setRazonSocial(RAZON_SOCIAL);
+        infoTributaria.setNombreComercial(NOMBRE_COMERCIAL);
+        infoTributaria.setRuc(RUC);
+        infoTributaria.setClaveAcceso(ClaveAcceso.generarClaveAcceso(fecha, TIPO_COMPROBANTE, RUC, AMBIENTE, serie, numeroComprobante, CODIGO_NUMERICO, tipoEmision));
+        infoTributaria.setCodDoc(TIPO_COMPROBANTE);
+        infoTributaria.setEstab(String.format("%03d", Integer.parseInt(codEstab)));
+        infoTributaria.setTipoEmision(tipoEmision);
+        infoTributaria.setPtoEmi(String.format("%03d", Integer.parseInt(ptoEmi)));
+        infoTributaria.setSecuencial(numeroComprobante);
+        infoTributaria.setDirMatriz(DIRECCION_MATRIZ);
+        f.setInfoTributaria(infoTributaria);
+
+        TotalImpuesto totimp1 = new TotalImpuesto();
+        totimp1.setBaseImponible(baseImponible);
+        totimp1.setCodigo("2"); //Este código indica que es IVA
+        totimp1.setCodigoPorcentaje("2"); //Este código indica que el valor es 12% (0=0%;2=12%;6=No objeto de impuesto)
+        totimp1.setValor(valorIva);
+
+        List<TotalImpuesto> totalConImpuestos = new ArrayList<TotalImpuesto>();
+        totalConImpuestos.add(totimp1);
+
+        InfoFactura infoFactura = new InfoFactura();
+        infoFactura.setFechaEmision(fechaDocumento);
+        infoFactura.setDirEstablecimiento(DIRECCION_MATRIZ);
+        infoFactura.setObligadoContabilidad("NO");
+
+        infoFactura.setRazonSocialComprador(razonsocial_comprador);
+        infoFactura.setTipoIdentificacionComprador(tipoid_comprador);
+        infoFactura.setIdentificacionComprador(id_comprador);
+
+        infoFactura.setTotalSinImpuestos(totSinImp);
+        infoFactura.setTotalDescuento(BigDecimal.ZERO);
+        infoFactura.setTotalImpuesto(totalConImpuestos);
+        infoFactura.setPropina(BigDecimal.ZERO);
+        infoFactura.setImporteTotal(valorTotal);
+        infoFactura.setMoneda("DOLAR");
+
+        f.setInfoFactura(infoFactura);
+
+        List<Detalle> detalle = new ArrayList<Detalle>();
+
+        //Detalle 1
+        Detalle d1 = new Detalle();
+        d1.setCodigoPrincipal(codproducto);
+        d1.setCodigoAuxiliar(codproducto);
+        d1.setDescripcion("Producto de prueba");
+        d1.setCantidad(new BigDecimal("1.00"));
+        d1.setPrecioUnitario(baseImponible);
+        d1.setDescuento(BigDecimal.ZERO);
+        d1.setPrecioTotalSinImpuesto(totSinImp);
+        List<DetAdicional> d1da = new ArrayList<DetAdicional>();
+        DetAdicional d1da1 = new DetAdicional();
+        d1da1.setNombre("operador");
+        d1da1.setValor(operador);
+        d1da.add(d1da1);
+        d1.setDetAdicional(d1da);
+        List<Impuesto> impuesto1 = new ArrayList<Impuesto>();
+        Impuesto i11 = new Impuesto();
+        i11.setCodigo("2");
+        i11.setCodigoPorcentaje("2");
+        i11.setTarifa(new BigDecimal("12"));
+        i11.setBaseImponible(baseImponible);
+        i11.setValor(valorIva);
+        impuesto1.add(i11);
+        d1.setImpuesto(impuesto1);
+
+        detalle.add(d1);
+
+        f.setDetalle(detalle);
+
+        List<CampoAdicional> infoAdicional = new ArrayList<CampoAdicional>();
+        CampoAdicional ca1 = new CampoAdicional();
+        ca1.setNombre("correoCliente");
+        ca1.setValor(email);
+        infoAdicional.add(ca1);
+        f.setCampoAdicional(infoAdicional);
+        java.io.StringWriter sw = null;
+
+        try {
+            JAXBContext context = JAXBContext.newInstance(
+                    new Class[]{Factura.class});
+            Marshaller marshaller = context.createMarshaller();
+            marshaller.setProperty("jaxb.encoding", "UTF-8");
+            marshaller.setProperty("jaxb.formatted.output",
+                    Boolean.valueOf(true));
+            sw = new StringWriter();
+
+            marshaller.marshal(f, sw);
+
+            System.out.println((new Date()) + " EVENTO: Se construyó de la factura no. " + serie + " ordenada por el operador " + operador);
+        } catch (Exception ex) {
+            System.out.println((new Date()) + " ERROR: Falló la construcción del archivo XML de Factura en el método construirFactura" + ex);
+        }
+        return sw.toString();
     }
 
     private Factura construirFactura(String tipoid_comprador, String id_comprador, String razonsocial_comprador, String operador, String email, String codproducto, String precio, String codEstab, String ptoEmi, String numeroComprobante) {
@@ -372,9 +556,11 @@ public class FacturaCtrl extends HttpServlet {
             marshaller.setProperty("jaxb.encoding", "UTF-8");
             marshaller.setProperty("jaxb.formatted.output",
                     Boolean.valueOf(true));
+
             OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(
                     RUTA_ARCHIVO_FIRMAR + infoTributaria.getClaveAcceso() + ".xml"), "UTF-8");
             marshaller.marshal(f, out);
+
             out.close();
             System.out.println((new Date()) + " EVENTO: Se construyó de la factura no. " + serie + " ordenada por el operador " + operador);
         } catch (Exception ex) {

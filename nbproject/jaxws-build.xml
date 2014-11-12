@@ -42,5 +42,21 @@
         <delete dir="${build.generated.sources.dir}/jax-ws/com/iveloper/sri/ws"/>
         <delete dir="${build.generated.dir}/jax-wsCache/AutorizacionComprobantes"/>
     </target>
-    <target name="wsimport-client-generate" depends="wsimport-client-AutorizacionComprobantes"/>
+    <target name="wsimport-client-Operations" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/Operations"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/Operations" destdir="${build.generated.dir}/jax-wsCache/Operations" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/Operations/wsdl/172.16.15.13_8080/ihsuite/Operations.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://172.16.15.13:8080/ihsuite/Operations?WSDL" xnocompile="true" xendorsed="true">
+            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/Operations/wsdl/172.16.15.13_8080/ihsuite/Operations.wsdl"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/Operations"/>
+        </wsimport>
+        <copy todir="${build.generated.sources.dir}/jax-ws">
+            <fileset dir="${build.generated.dir}/jax-wsCache/Operations">
+                <include name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="wsimport-client-clean-Operations" depends="-init-project">
+        <delete dir="${build.generated.sources.dir}/jax-ws/com/iveloper/ihsuite/ws"/>
+        <delete dir="${build.generated.dir}/jax-wsCache/Operations"/>
+    </target>
+    <target name="wsimport-client-generate" depends="wsimport-client-AutorizacionComprobantes, wsimport-client-Operations"/>
 </project>
