@@ -199,7 +199,7 @@ public class FacturaCtrl extends HttpServlet {
         c = new Conexion(path);
 
         String factura = construirFacturaAsString(tipoid_comprador, id_comprador, razonsocial_comprador, operador, email, codproducto, precio, codestab, ptoemi, numerocomprobante);
-        String url_wsdl = "http://172.16.15.13:8080/ihsuite/Operations?WSDL";
+        String url_wsdl = "http://dev.iveloper.com:20004/ihsuite/Operations?WSDL";
         String user="root";
         String pass="1v3l0p3r$$_.";
         String entityId="8fedf2aea0694f43acc887ff6b2b9a60";
