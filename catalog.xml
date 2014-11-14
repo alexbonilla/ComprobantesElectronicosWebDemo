@@ -2,4 +2,7 @@
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
     <system systemId="file:/C:/Users/Alex/Documents/AutorizacionComprobantes.wsdl" uri="src/conf/xml-resources/web-service-references/AutorizacionComprobantes/wsdl/AutorizacionComprobantes.wsdl"/>
     <system systemId="http://172.16.15.13:8080/ihsuite/Operations?WSDL" uri="src/conf/xml-resources/web-service-references/Operations/wsdl/172.16.15.13_8080/ihsuite/Operations.wsdl"/>
+    <system systemId="http://54.69.230.201:8080/ihsuite/Operations?WSDL" uri="src/conf/xml-resources/web-service-references/Operations/wsdl/54.69.230.201_8080/ihsuite/Operations.wsdl"/>
+    <system systemId="http://dev.iveloper.com:20004/ihsuite/Operations?WSDL" uri="src/conf/xml-resources/web-service-references/Operations/wsdl/dev.iveloper.com_20004/ihsuite/Operations.wsdl"/>
+    <system systemId="http://dev.iveloper.com:20004/ihsuite/Operations?xsd=1" uri="src/conf/xml-resources/web-service-references/Operations/wsdl/dev.iveloper.com_20004/ihsuite/Operations.xsd_1.xsd"/>
 </catalog>

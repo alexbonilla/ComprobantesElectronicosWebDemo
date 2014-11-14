@@ -39,8 +39,8 @@
       </wsimport-options>
     </client>
     <client name="Operations">
-      <wsdl-url>http://172.16.15.13:8080/ihsuite/Operations?WSDL</wsdl-url>
-      <local-wsdl-file>172.16.15.13_8080/ihsuite/Operations.wsdl</local-wsdl-file>
+      <wsdl-url>http://dev.iveloper.com:20004/ihsuite/Operations?WSDL</wsdl-url>
+      <local-wsdl-file>dev.iveloper.com_20004/ihsuite/Operations.wsdl</local-wsdl-file>
       <package-name>com.iveloper.ihsuite.ws</package-name>
       <catalog-file>catalog.xml</catalog-file>
       <wsimport-options>
@@ -58,7 +58,7 @@
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>wsdlLocation</wsimport-option-name>
-          <wsimport-option-value>http://172.16.15.13:8080/ihsuite/Operations?WSDL</wsimport-option-value>
+          <wsimport-option-value>http://dev.iveloper.com:20004/ihsuite/Operations?WSDL</wsimport-option-value>
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>xnocompile</wsimport-option-name>

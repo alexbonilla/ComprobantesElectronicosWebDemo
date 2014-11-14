@@ -44,8 +44,8 @@
     </target>
     <target name="wsimport-client-Operations" depends="wsimport-init">
         <mkdir dir="${build.generated.dir}/jax-wsCache/Operations"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/Operations" destdir="${build.generated.dir}/jax-wsCache/Operations" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/Operations/wsdl/172.16.15.13_8080/ihsuite/Operations.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://172.16.15.13:8080/ihsuite/Operations?WSDL" xnocompile="true" xendorsed="true">
-            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/Operations/wsdl/172.16.15.13_8080/ihsuite/Operations.wsdl"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/Operations" destdir="${build.generated.dir}/jax-wsCache/Operations" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/Operations/wsdl/dev.iveloper.com_20004/ihsuite/Operations.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://dev.iveloper.com:20004/ihsuite/Operations?WSDL" xnocompile="true" xendorsed="true">
+            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/Operations/wsdl/dev.iveloper.com_20004/ihsuite/Operations.wsdl"/>
             <produces dir="${build.generated.dir}/jax-wsCache/Operations"/>
         </wsimport>
         <copy todir="${build.generated.sources.dir}/jax-ws">
