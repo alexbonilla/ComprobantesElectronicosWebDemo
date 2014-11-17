@@ -199,12 +199,13 @@ public class FacturaCtrl extends HttpServlet {
         c = new Conexion(path);
 
         String factura = construirFacturaAsString(tipoid_comprador, id_comprador, razonsocial_comprador, operador, email, codproducto, precio, codestab, ptoemi, numerocomprobante);
-        String url_wsdl = "http://54.69.230.201:8080/ihsuite/Operations?WSDL";
+        String url_wsdl = "http://172.16.15.13:8080/ihsuite/Operations?WSDL";
+//        String url_wsdl = "http://dev.iveloper.com:20004/ihsuite/Operations?WSDL";
         String user="root";
         String pass="1v3l0p3r$$_.";
-        String entityId="8fedf2aea0694f43acc887ff6b2b9a60";
-//        Operations_Service operations_service = new Operations_Service(new URL(url_wsdl));
-        Operations_Service operations_service = new Operations_Service();
+        String entityId="a44dbdbb4c0b43b4a0e8f48c33dced6b";
+        Operations_Service operations_service = new Operations_Service(new URL(url_wsdl));
+//        Operations_Service operations_service = new Operations_Service();
         Operations operation = operations_service.getOperationsPort();
         WsResponse lotRes = operation.createLot("Test lot", LotType.UNITARIO, user, pass, entityId, "alexfbonilla@hotmail.com");
         if(lotRes.isProcessed()){

@@ -1,5 +1,5 @@
 var Script = function() {
-    obtenerSigNumFactura();
+    //obtenerSigNumFactura();
 }();
 
 function obtenerSigNumFactura(){
