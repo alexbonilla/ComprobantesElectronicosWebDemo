@@ -1,24 +1,76 @@
-<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Metro/2.3 (tags/2.3-7528; 2013-04-29T19:34:10+0000) JAXWS-RI/2.2.8 JAXWS/2.2 svn-revision#unknown. --><xs:schema xmlns:tns="http://ws.ihsuite.iveloper.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://ws.ihsuite.iveloper.com/">
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.1-b419 (branches/2.3.1.x-7937; 2014-08-04T08:11:03+0000) JAXWS-RI/2.2.10-b140803.1500 JAXWS-API/2.2.11 JAXB-RI/2.2.10-b140802.1033 JAXB-API/2.2.12-b140109.1041 svn-revision#unknown. --><xs:schema xmlns:tns="http://ws.services.ihsuite.iveloper.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://ws.services.ihsuite.iveloper.com/">
 
 <xs:element name="AddFilesWithApp" type="tns:AddFilesWithApp"/>
 
 <xs:element name="AddFilesWithAppResponse" type="tns:AddFilesWithAppResponse"/>
 
-<xs:element name="CloseLot" type="tns:CloseLot"/>
-
-<xs:element name="CloseLotResponse" type="tns:CloseLotResponse"/>
-
 <xs:element name="CreateLot" type="tns:CreateLot"/>
 
 <xs:element name="CreateLotResponse" type="tns:CreateLotResponse"/>
 
-<xs:element name="DocumentExist" type="tns:DocumentExist"/>
-
-<xs:element name="DocumentExistResponse" type="tns:DocumentExistResponse"/>
-
 <xs:element name="GetData" type="tns:GetData"/>
 
 <xs:element name="GetDataResponse" type="tns:GetDataResponse"/>
+
+<xs:element name="account" type="tns:account"/>
+
+<xs:element name="company" type="tns:company"/>
+
+<xs:element name="getLoginBean" type="tns:getLoginBean"/>
+
+<xs:element name="getLoginBeanResponse" type="tns:getLoginBeanResponse"/>
+
+<xs:element name="setLoginBean" type="tns:setLoginBean"/>
+
+<xs:element name="setLoginBeanResponse" type="tns:setLoginBeanResponse"/>
+
+<xs:complexType name="getLoginBean">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="getLoginBeanResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:loginBean" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="loginBean">
+<xs:sequence>
+<xs:element name="entityid" type="xs:string" minOccurs="0"/>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
+<xs:element name="password" type="xs:string" minOccurs="0"/>
+<xs:element name="sessionAccount" type="tns:account" minOccurs="0"/>
+<xs:element name="uname" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="account">
+<xs:sequence>
+<xs:element name="active" type="xs:short" minOccurs="0"/>
+<xs:element name="datecreated" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="entityid" type="tns:company" minOccurs="0"/>
+<xs:element name="lastlogin" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="logo" type="xs:base64Binary" minOccurs="0"/>
+<xs:element name="mail" type="xs:string" minOccurs="0"/>
+<xs:element name="online" type="xs:short" minOccurs="0"/>
+<xs:element name="pwd" type="xs:base64Binary" minOccurs="0"/>
+<xs:element name="roles" type="xs:string" minOccurs="0"/>
+<xs:element name="salt" type="xs:base64Binary" minOccurs="0"/>
+<xs:element name="user" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="company">
+<xs:sequence>
+<xs:element name="active" type="xs:boolean" minOccurs="0"/>
+<xs:element name="createdBy" type="xs:string" minOccurs="0"/>
+<xs:element name="dateEntered" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="dateModified" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="id" type="xs:string" minOccurs="0"/>
+<xs:element name="modifiedUserId" type="xs:string" minOccurs="0"/>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
 
 <xs:complexType name="CreateLot">
 <xs:sequence>
@@ -56,20 +108,14 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="DocumentExist">
+<xs:complexType name="setLoginBean">
 <xs:sequence>
-<xs:element name="docTypeCode" type="xs:string" minOccurs="0"/>
-<xs:element name="docNum" type="xs:string" minOccurs="0"/>
-<xs:element name="user" type="xs:string" minOccurs="0"/>
-<xs:element name="pass" type="xs:string" minOccurs="0"/>
-<xs:element name="userEntityId" type="xs:string" minOccurs="0"/>
+<xs:element name="arg0" type="tns:loginBean" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="DocumentExistResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:wsResponse" minOccurs="0"/>
-</xs:sequence>
+<xs:complexType name="setLoginBeanResponse">
+<xs:sequence/>
 </xs:complexType>
 
 <xs:complexType name="AddFilesWithApp">
@@ -79,7 +125,7 @@
 <xs:element name="xmlString" type="xs:string" minOccurs="0"/>
 <xs:element name="docTypeCode" type="xs:string" minOccurs="0"/>
 <xs:element name="docNum" type="xs:string" minOccurs="0"/>
-<xs:element name="referencia" type="xs:string" minOccurs="0"/>
+<xs:element name="reference" type="xs:string" minOccurs="0"/>
 <xs:element name="docRef" type="xs:base64Binary" nillable="true" minOccurs="0"/>
 <xs:element name="sendNotification" type="xs:boolean"/>
 <xs:element name="clientContact" type="tns:clientContactObject" minOccurs="0"/>
@@ -96,6 +142,7 @@
 <xs:element name="emailCC1" type="xs:string" minOccurs="0"/>
 <xs:element name="name" type="xs:string" minOccurs="0"/>
 <xs:element name="urlPost" type="xs:string" minOccurs="0"/>
+<xs:element name="vatNumber" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -161,21 +208,6 @@
 <xs:element name="notifyname" type="xs:string" minOccurs="0"/>
 <xs:element name="reference" type="xs:string" minOccurs="0"/>
 <xs:element name="statuschanged" type="xs:dateTime" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="CloseLot">
-<xs:sequence>
-<xs:element name="lotId" type="xs:string" minOccurs="0"/>
-<xs:element name="user" type="xs:string" minOccurs="0"/>
-<xs:element name="pass" type="xs:string" minOccurs="0"/>
-<xs:element name="userEntityId" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="CloseLotResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:wsResponse" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 

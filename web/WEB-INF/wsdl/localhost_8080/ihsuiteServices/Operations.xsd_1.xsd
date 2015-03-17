@@ -1,0 +1,206 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.1-b419 (branches/2.3.1.x-7937; 2014-08-04T08:11:03+0000) JAXWS-RI/2.2.10-b140803.1500 JAXWS-API/2.2.11 JAXB-RI/2.2.10-b140802.1033 JAXB-API/2.2.12-b140109.1041 svn-revision#unknown. --><xs:schema xmlns:tns="http://ws.services.ihsuite.iveloper.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://ws.services.ihsuite.iveloper.com/">
+
+<xs:element name="AddFilesWithApp" type="tns:AddFilesWithApp"/>
+
+<xs:element name="AddFilesWithAppNoAccessKey" type="tns:AddFilesWithAppNoAccessKey"/>
+
+<xs:element name="AddFilesWithAppNoAccessKeyResponse" type="tns:AddFilesWithAppNoAccessKeyResponse"/>
+
+<xs:element name="AddFilesWithAppResponse" type="tns:AddFilesWithAppResponse"/>
+
+<xs:element name="CreateLot" type="tns:CreateLot"/>
+
+<xs:element name="CreateLotResponse" type="tns:CreateLotResponse"/>
+
+<xs:element name="GetData" type="tns:GetData"/>
+
+<xs:element name="GetDataResponse" type="tns:GetDataResponse"/>
+
+<xs:complexType name="CreateLot">
+<xs:sequence>
+<xs:element name="description" type="xs:string" minOccurs="0"/>
+<xs:element name="typeLot" type="tns:lotType" minOccurs="0"/>
+<xs:element name="user" type="xs:string" minOccurs="0"/>
+<xs:element name="pass" type="xs:string" minOccurs="0"/>
+<xs:element name="userEntityId" type="xs:string" minOccurs="0"/>
+<xs:element name="notiEmailInternal" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="CreateLotResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:wsResponse" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="wsResponse">
+<xs:complexContent>
+<xs:extension base="tns:wsResponseBase">
+<xs:sequence>
+<xs:element name="documentId" type="xs:string" minOccurs="0"/>
+<xs:element name="lotId" type="xs:string" minOccurs="0"/>
+<xs:element name="lotNumber" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="wsResponseBase">
+<xs:sequence>
+<xs:element name="messageException" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="processed" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="AddFilesWithAppNoAccessKey">
+<xs:sequence>
+<xs:element name="lotId" type="xs:string" minOccurs="0"/>
+<xs:element name="docAppRefCode" type="xs:string" minOccurs="0"/>
+<xs:element name="xmlString" type="xs:string" minOccurs="0"/>
+<xs:element name="docTypeCode" type="xs:string" minOccurs="0"/>
+<xs:element name="docNum" type="xs:string" minOccurs="0"/>
+<xs:element name="reference" type="xs:string" minOccurs="0"/>
+<xs:element name="docRef" type="xs:base64Binary" nillable="true" minOccurs="0"/>
+<xs:element name="sendNotification" type="xs:boolean"/>
+<xs:element name="clientContact" type="tns:clientContactObject" minOccurs="0"/>
+<xs:element name="user" type="xs:string" minOccurs="0"/>
+<xs:element name="pass" type="xs:string" minOccurs="0"/>
+<xs:element name="userEntityId" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="clientContactObject">
+<xs:sequence>
+<xs:element name="cellphone1" type="xs:string" minOccurs="0"/>
+<xs:element name="email1" type="xs:string" minOccurs="0"/>
+<xs:element name="emailCC1" type="xs:string" minOccurs="0"/>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
+<xs:element name="urlPost" type="xs:string" minOccurs="0"/>
+<xs:element name="vatNumber" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="AddFilesWithAppNoAccessKeyResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:wsResponse" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="AddFilesWithApp">
+<xs:sequence>
+<xs:element name="lotId" type="xs:string" minOccurs="0"/>
+<xs:element name="docAppRefCode" type="xs:string" minOccurs="0"/>
+<xs:element name="xmlString" type="xs:string" minOccurs="0"/>
+<xs:element name="docTypeCode" type="xs:string" minOccurs="0"/>
+<xs:element name="docNum" type="xs:string" minOccurs="0"/>
+<xs:element name="reference" type="xs:string" minOccurs="0"/>
+<xs:element name="docRef" type="xs:base64Binary" nillable="true" minOccurs="0"/>
+<xs:element name="sendNotification" type="xs:boolean"/>
+<xs:element name="clientContact" type="tns:clientContactObject" minOccurs="0"/>
+<xs:element name="user" type="xs:string" minOccurs="0"/>
+<xs:element name="pass" type="xs:string" minOccurs="0"/>
+<xs:element name="userEntityId" type="xs:string" minOccurs="0"/>
+<xs:element name="accessKey" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="AddFilesWithAppResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:wsResponse" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="GetData">
+<xs:sequence>
+<xs:element name="documentId" type="xs:string" minOccurs="0"/>
+<xs:element name="user" type="xs:string" minOccurs="0"/>
+<xs:element name="pass" type="xs:string" minOccurs="0"/>
+<xs:element name="userEntityId" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="GetDataResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:wsResponseData" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="wsResponseData">
+<xs:complexContent>
+<xs:extension base="tns:wsResponseBase">
+<xs:sequence>
+<xs:element name="documentAutorizacion" type="xs:string" minOccurs="0"/>
+<xs:element name="documentAutorizacionDate" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="documentClave" type="xs:string" minOccurs="0"/>
+<xs:element name="documentEvents" type="tns:wsResponseDocumentEvent" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="documentId" type="xs:string" minOccurs="0"/>
+<xs:element name="documentInstance" type="tns:docFacInstance" minOccurs="0"/>
+<xs:element name="documentNotified" type="xs:boolean"/>
+<xs:element name="documentReference" type="xs:string" minOccurs="0"/>
+<xs:element name="documentStatus" type="tns:sriStatus" minOccurs="0"/>
+<xs:element name="documentType" type="tns:sriTipoComprobante" minOccurs="0"/>
+<xs:element name="documentTypeEmision" type="tns:sriTypeEmission" minOccurs="0"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="wsResponseDocumentEvent">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="docFacInstance">
+<xs:sequence>
+<xs:element name="datecreated" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="docapprefcode" type="xs:string" minOccurs="0"/>
+<xs:element name="docautorizacion" type="xs:string" minOccurs="0"/>
+<xs:element name="docautorizaciondate" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="docnum" type="xs:string" minOccurs="0"/>
+<xs:element name="docref" type="xs:base64Binary" minOccurs="0"/>
+<xs:element name="docstatus" type="tns:sriStatus" minOccurs="0"/>
+<xs:element name="doctypecode" type="xs:string" minOccurs="0"/>
+<xs:element name="document" type="xs:base64Binary" minOccurs="0"/>
+<xs:element name="documentid" type="xs:string" minOccurs="0"/>
+<xs:element name="lotid" type="xs:string" minOccurs="0"/>
+<xs:element name="notifyemail" type="xs:string" minOccurs="0"/>
+<xs:element name="notifyname" type="xs:string" minOccurs="0"/>
+<xs:element name="reference" type="xs:string" minOccurs="0"/>
+<xs:element name="statuschanged" type="xs:dateTime" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:simpleType name="lotType">
+<xs:restriction base="xs:string">
+<xs:enumeration value="Unitario"/>
+<xs:enumeration value="Multiple"/>
+</xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="sriStatus">
+<xs:restriction base="xs:string">
+<xs:enumeration value="Autorizada"/>
+<xs:enumeration value="Cancelada"/>
+<xs:enumeration value="Devuelta"/>
+<xs:enumeration value="NoAutorizada"/>
+<xs:enumeration value="NoProcesada"/>
+<xs:enumeration value="Recibida"/>
+</xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="sriTipoComprobante">
+<xs:restriction base="xs:string">
+<xs:enumeration value="Factura"/>
+<xs:enumeration value="NotaCredito"/>
+<xs:enumeration value="NotaDebito"/>
+<xs:enumeration value="GuiaRemision"/>
+<xs:enumeration value="ComprobanteRetencion"/>
+</xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="sriTypeEmission">
+<xs:restriction base="xs:string">
+<xs:enumeration value="normal"/>
+<xs:enumeration value="contingencia"/>
+</xs:restriction>
+</xs:simpleType>
+</xs:schema>

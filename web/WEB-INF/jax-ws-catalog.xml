@@ -5,4 +5,8 @@
     <system systemId="http://54.69.230.201:8080/ihsuite/Operations?WSDL" uri="wsdl/54.69.230.201_8080/ihsuite/Operations.wsdl"/>
     <system systemId="http://dev.iveloper.com:20004/ihsuite/Operations?WSDL" uri="wsdl/dev.iveloper.com_20004/ihsuite/Operations.wsdl"/>
     <system systemId="http://dev.iveloper.com:20004/ihsuite/Operations?xsd=1" uri="wsdl/dev.iveloper.com_20004/ihsuite/Operations.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/ihsuiteServices/Operations?WSDL" uri="wsdl/localhost_8080/ihsuiteServices/Operations.wsdl"/>
+    <system systemId="http://localhost:8080/ihsuiteServices/Operations?xsd=1" uri="wsdl/localhost_8080/ihsuiteServices/Operations.xsd_1.xsd"/>
+    <system systemId="https://dev.rastreototal.com:20004/ihsuiteServices/Operations?WSDL" uri="wsdl/dev.rastreototal.com_20004/ihsuiteServices/Operations.wsdl"/>
+    <system systemId="https://dev.rastreototal.com:20004/ihsuiteServices/Operations?xsd=1" uri="wsdl/dev.rastreototal.com_20004/ihsuiteServices/Operations.xsd_1.xsd"/>
 </catalog>

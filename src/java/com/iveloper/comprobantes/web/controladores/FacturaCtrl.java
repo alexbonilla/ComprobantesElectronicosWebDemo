@@ -20,13 +20,13 @@ import com.iveloper.comprobantes.utils.ArchivoUtils;
 import com.iveloper.comprobantes.utils.ClaveAcceso;
 import com.iveloper.db.Conexion;
 import com.iveloper.entidades.TrcRUC;
-import com.iveloper.ihsuite.ws.ClientContactObject;
-import com.iveloper.ihsuite.ws.LotType;
-import com.iveloper.ihsuite.ws.Operations;
-import com.iveloper.ihsuite.ws.Operations_Service;
-import com.iveloper.ihsuite.ws.SriStatus;
-import com.iveloper.ihsuite.ws.WsResponse;
-import com.iveloper.ihsuite.ws.WsResponseData;
+import com.iveloper.ihsuite.services.ws.ClientContactObject;
+import com.iveloper.ihsuite.services.ws.LotType;
+import com.iveloper.ihsuite.services.ws.Operations;
+import com.iveloper.ihsuite.services.ws.Operations_Service;
+import com.iveloper.ihsuite.services.ws.SriStatus;
+import com.iveloper.ihsuite.services.ws.WsResponse;
+import com.iveloper.ihsuite.services.ws.WsResponseData;
 import ec.gob.sri.comprobantes.ws.aut.Autorizacion;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -79,6 +79,7 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
+
 /**
  *
  * @author Alex
@@ -86,10 +87,15 @@ import net.sf.jasperreports.engine.xml.JRXmlLoader;
 @WebServlet(name = "FacturaCtrl", urlPatterns = {"/FacturaCtrl"})
 public class FacturaCtrl extends HttpServlet {
 
-    final static String RAZON_SOCIAL = "ALEX FERNANDO BONILLA GORDILLO";
-    final static String NOMBRE_COMERCIAL = "ALEX FERNANDO BONILLA GORDILLO";
-    final static String RUC = "0913814455001";
-    final static String DIRECCION_MATRIZ = "CDLA NAVAL NORTE MZ 5 VILLA 12";
+//    final static String RAZON_SOCIAL = "ALEX FERNANDO BONILLA GORDILLO";
+    final static String RAZON_SOCIAL = "CONCESIONARIA NORTE CONORTE S.A.";
+//    final static String NOMBRE_COMERCIAL = "ALEX FERNANDO BONILLA GORDILLO";
+    final static String NOMBRE_COMERCIAL = "CONCESIONARIA NORTE CONORTE S.A.";
+//    final static String RUC = "0913814455001";
+    final static String RUC = "0991503331001";
+
+//    final static String DIRECCION_MATRIZ = "CDLA NAVAL NORTE MZ 5 VILLA 12";
+    final static String DIRECCION_MATRIZ = "GUAYAS / GUAYAQUIL / AV. CONSTITUCION 100 Y AV. JUAN TANCA MARENGO";
     final static String TIPO_COMPROBANTE = "01"; //01 factura
     final static String AMBIENTE = "1"; //1 pruebas, 2 producción
     final static String CODIGO_NUMERICO = "12344321"; //codigo arbitrario
@@ -102,7 +108,7 @@ public class FacturaCtrl extends HttpServlet {
     final static String RUTA_ARCHIVO_FIRMADO = "C:\\Users\\Alex\\Downloads\\firmado\\";
     final static String RUTA_ARCHIVO_AUTORIZADO = "C:\\Users\\Alex\\Downloads\\autorizado\\";
     final static String RUTA_ARCHIVO_NOAUTORIZADO = "C:\\Users\\Alex\\Downloads\\no_autorizado\\";
-
+    private String claveAcceso=null;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -135,6 +141,37 @@ public class FacturaCtrl extends HttpServlet {
         }
         out.close();
     }
+
+//    public void disableCertificateValidation() {
+//        // Create a trust manager that does not validate certificate chains
+//        TrustManager[] trustAllCerts = new TrustManager[]{
+//            new X509TrustManager() {
+//                public X509Certificate[] getAcceptedIssuers() {
+//                    return new X509Certificate[0];
+//                }
+//
+//                public void checkClientTrusted(X509Certificate[] certs, String authType) {
+//                }
+//
+//                public void checkServerTrusted(X509Certificate[] certs, String authType) {
+//                }
+//            }};
+//// Ignore differences between given hostname and certificate hostname
+//        HostnameVerifier hv = new HostnameVerifier() {
+//            public boolean verify(String hostname, SSLSession session) {
+//                return true;
+//            }
+//        };
+//
+//        // Install the all-trusting trust manager
+//        try {
+//            SSLContext sc = SSLContext.getInstance("SSL");
+//            sc.init(null, trustAllCerts, new SecureRandom());
+//            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+//            HttpsURLConnection.setDefaultHostnameVerifier(hv);
+//        } catch (Exception e) {
+//        }
+//    }
 
     private String pruebaSQL(HttpServletRequest request, HttpServletResponse response) {
         int resultados = Integer.parseInt(request.getParameter("cantidadregistros"));
@@ -198,34 +235,55 @@ public class FacturaCtrl extends HttpServlet {
         Conexion c;
         c = new Conexion(path);
 
+//        System.setProperty("javax.net.ssl.keyStore", "/Library/Java/JavaVirtualMachines/jdk1.8.0_25.jdk/Contents/Home/jre/lib/security/cacerts");
+//        System.setProperty("javax.net.ssl.keyStorePassword", "changeit");
+//        System.setProperty("javax.net.ssl.trustStore", "/Library/Java/JavaVirtualMachines/jdk1.8.0_25.jdk/Contents/Home/jre/lib/security/cacerts");
+//        System.setProperty("javax.net.ssl.trustStorePassword", "changeit");
+//        
+        System.out.print("ALEX javax.net.ssl.keyStore: " + System.getProperty("javax.net.ssl.keyStore"));
+        System.out.print("ALEX javax.net.ssl.trustStore: " + System.getProperty("javax.net.ssl.trustStore"));
+        
         String factura = construirFacturaAsString(tipoid_comprador, id_comprador, razonsocial_comprador, operador, email, codproducto, precio, codestab, ptoemi, numerocomprobante);
-        String url_wsdl = "http://172.16.15.13:8080/ihsuite/Operations?WSDL";
-//        String url_wsdl = "http://dev.iveloper.com:20004/ihsuite/Operations?WSDL";
-        String user="root";
-        String pass="1v3l0p3r$$_.";
-        String entityId="a44dbdbb4c0b43b4a0e8f48c33dced6b";
+//        String url_wsdl = "http://172.16.15.13:8080/ihsuite/Operations?WSDL";
+//        String url_wsdl = "https://dev.rastreototal.com:20004/ihsuite/Operations?WSDL";
+        String url_wsdl = "https://dev.rastreototal.com:20004/ihsuiteServices/Operations?WSDL";
+//        String url_wsdl = "http://172.16.15.13:8080/ihsuiteServices/Operations?WSDL";
+//        String url_wsdl = "https://dev.iveloper.com:20004/ihsuiteServices/Operations?WSDL";
+//        String url_wsdl = "http://localhost:8080/ihsuite/Operations?WSDL";
+//        String url_wsdl = "http://localhost:8080/ihsuiteServices/Operations?WSDL";
+        String user = "abonilla";
+        String pass = "fenetre";
+        String entityId = "a44dbdbb4c0b43b4a0e8f48c33dced6b";
+//        String entityId = "8fedf2aea0694f43acc887ff6b2b9a60";
+
+//        disableCertificateValidation();
         Operations_Service operations_service = new Operations_Service(new URL(url_wsdl));
 //        Operations_Service operations_service = new Operations_Service();
         Operations operation = operations_service.getOperationsPort();
+        
         WsResponse lotRes = operation.createLot("Test lot", LotType.UNITARIO, user, pass, entityId, "alexfbonilla@hotmail.com");
-        if(lotRes.isProcessed()){
+        if (lotRes.isProcessed()) {
             String lotId = lotRes.getLotId();
             ClientContactObject cc = new ClientContactObject();
             cc.setName(razonsocial_comprador);
             cc.setEmail1(email);
-            WsResponse docRes = operation.addFilesWithApp(lotId, "PB", factura, "01", codestab+ptoemi+numerocomprobante, "Doc de prueba", new byte[0], true, cc, user, pass, entityId);
-            if(docRes.isProcessed()){
+            cc.setVatNumber(id_comprador);
+
+            WsResponse docRes = operation.addFilesWithApp(lotId, "PB", factura, "01", codestab + ptoemi + numerocomprobante, "Doc de prueba", new byte[0], true, cc, user, pass, entityId, this.claveAcceso);
+            if (docRes.isProcessed()) {
                 String docId = docRes.getDocumentId();
                 WsResponseData dataRes = operation.getData(docId, user, pass, entityId);
-                if(dataRes.getDocumentStatus().equals(SriStatus.NO_PROCESADA) || dataRes.getDocumentStatus().equals(SriStatus.RECIBIDA)){
+                if (dataRes.getDocumentStatus().equals(SriStatus.NO_PROCESADA) || dataRes.getDocumentStatus().equals(SriStatus.RECIBIDA)) {
                     //Esperar
                     Thread.sleep(TIEMPO_ESPERA_SOLICITAR_AUTORIZACION);
                     dataRes = operation.getData(docId, user, pass, entityId);
-                    if(dataRes.isProcessed()){
+                    if (dataRes.isProcessed()) {
                         return dataRes.getDocumentStatus().value();
                     }
                 }
             }
+        } else {
+            Logger.getLogger(Operations.class.getName()).log(Level.WARNING, lotRes.getMessageException().get(0));
         }
         return null;
     }
@@ -346,6 +404,8 @@ public class FacturaCtrl extends HttpServlet {
 
         System.out.println((new Date()) + " EVENTO: Se inicia la construcción de la factura no. " + serie + numeroComprobante + " ordenada por el operador " + operador);
 
+        this.claveAcceso = ClaveAcceso.generarClaveAcceso(fecha, TIPO_COMPROBANTE, RUC, AMBIENTE, serie, numeroComprobante, CODIGO_NUMERICO, tipoEmision);
+        
         Factura f = new Factura();
         f.setVersion("1.1.0");
         f.setId("comprobante");
@@ -355,7 +415,7 @@ public class FacturaCtrl extends HttpServlet {
         infoTributaria.setRazonSocial(RAZON_SOCIAL);
         infoTributaria.setNombreComercial(NOMBRE_COMERCIAL);
         infoTributaria.setRuc(RUC);
-        infoTributaria.setClaveAcceso(ClaveAcceso.generarClaveAcceso(fecha, TIPO_COMPROBANTE, RUC, AMBIENTE, serie, numeroComprobante, CODIGO_NUMERICO, tipoEmision));
+        infoTributaria.setClaveAcceso(this.claveAcceso);
         infoTributaria.setCodDoc(TIPO_COMPROBANTE);
         infoTributaria.setEstab(String.format("%03d", Integer.parseInt(codEstab)));
         infoTributaria.setTipoEmision(tipoEmision);
@@ -376,7 +436,9 @@ public class FacturaCtrl extends HttpServlet {
         InfoFactura infoFactura = new InfoFactura();
         infoFactura.setFechaEmision(fechaDocumento);
         infoFactura.setDirEstablecimiento(DIRECCION_MATRIZ);
-        infoFactura.setObligadoContabilidad("NO");
+//        infoFactura.setObligadoContabilidad("NO");
+        infoFactura.setObligadoContabilidad("SI");
+        infoFactura.setContribuyenteEspecial("393");
 
         infoFactura.setRazonSocialComprador(razonsocial_comprador);
         infoFactura.setTipoIdentificacionComprador(tipoid_comprador);
