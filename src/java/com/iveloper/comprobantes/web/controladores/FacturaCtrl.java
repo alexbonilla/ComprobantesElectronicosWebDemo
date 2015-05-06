@@ -246,11 +246,11 @@ public class FacturaCtrl extends HttpServlet {
         String factura = construirFacturaAsString(tipoid_comprador, id_comprador, razonsocial_comprador, operador, email, codproducto, precio, codestab, ptoemi, numerocomprobante);
 //        String url_wsdl = "http://172.16.15.13:8080/ihsuite/Operations?WSDL";
 //        String url_wsdl = "https://dev.rastreototal.com:20004/ihsuite/Operations?WSDL";
-        String url_wsdl = "https://dev.rastreototal.com:20004/ihsuiteServices/Operations?WSDL";
+//        String url_wsdl = "https://dev.rastreototal.com:20004/ihsuiteServices/Operations?WSDL";
 //        String url_wsdl = "http://172.16.15.13:8080/ihsuiteServices/Operations?WSDL";
 //        String url_wsdl = "https://dev.iveloper.com:20004/ihsuiteServices/Operations?WSDL";
 //        String url_wsdl = "http://localhost:8080/ihsuite/Operations?WSDL";
-//        String url_wsdl = "http://localhost:8080/ihsuiteServices/Operations?WSDL";
+        String url_wsdl = "http://localhost:8080/ihsuiteServices/Operations?WSDL";
         String user = "abonilla";
         String pass = "fenetre";
         String entityId = "a44dbdbb4c0b43b4a0e8f48c33dced6b";
